@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP, func, ForeignKey, Text
 from sqlalchemy.orm import relationship
+from entity.Lyric import Lyric
 
 from entity.base import Base
 
@@ -11,8 +12,10 @@ class Track(Base):
     album_id = Column(Integer, ForeignKey('album.album_id'))
     track_number = Column(Integer, nullable=False)
     spotify_popularity = Column(Integer, nullable=True)
+    duration_ms = Column(Integer, nullable=True)
     is_lyrics = Column(Boolean, default=False, nullable=False)
     created_at = Column(TIMESTAMP, server_default=func.now())
     updated_at = Column(TIMESTAMP, onupdate=func.now())
 
     album = relationship("Album", back_populates="tracks")
+    lyrics = relationship("Lyric", back_populates="track")

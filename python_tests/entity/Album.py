@@ -13,6 +13,5 @@ class Album(Base):
     cover_image = Column(String(255))
     release_date = Column(Date)
 
-    artists = relationship("entity.ArtistAlbum.ArtistAlbum", back_populates="album")
-    tracks = relationship("entity.Track.Track", back_populates="album")
-
+    artists = relationship("ArtistAlbum", back_populates="album")
+    tracks = relationship("Track", back_populates="album")
