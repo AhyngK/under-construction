@@ -1,30 +1,18 @@
-from datetime import datetime
-from mysql_manager import MySQLManager
+from service import mysql_manager
 from entity.Album import Album
 
 
-def save_albums(albums):
-    session = MySQLManager.Session()
-    for album in albums:
-        new_album = Album(
-            name=album['name'],
-            album_type=album['album_type'],
-            total_tracks=album['total_tracks'],
-            spotify_id=album['id'],
-            cover_image=album['images'][0]['url'] if album['images'] else None,
-            release_date=figure_date(album['release_date'])
-        )
-        session.add(new_album)
+def save_album(album):
+    session = mysql_manager.Session()
+    session.add(album)
     session.commit()
+    saved_album = session.query(Album).filter(Album.album_id == album.album_id).first()
     session.close()
+    return saved_album
 
 
-def figure_date(date_str):
-    if len(date_str) == 4:
-        return datetime.strptime(date_str, '%Y').date()
-    elif len(date_str) == 7:
-        return datetime.strptime(date_str, '%Y-%m').date()
-    elif len(date_str) >= 10:
-        return datetime.strptime(date_str[:10], '%Y-%m-%d').date()
-    else:
-        return None
+def find_album_by_spotify_id(spotify_id):
+    session = mysql_manager.Session()
+    album = session.query(Album).filter(Album.spotify_id == spotify_id).first()
+    session.close()
+    return album

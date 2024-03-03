@@ -2,6 +2,9 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import time
 
+from entity.Track import Track
+from service import track_manager
+
 client_id = '0ef1370ce5544661afdaba8be1572a5f'
 client_secret = '7f35c93e79f14c47896531882cb6133f'
 
@@ -12,9 +15,8 @@ def get_albums(year, limit=50):
     albums = []
     offset = 0
     total = None
-
     while total is None or len(albums) < total:
-        results = spotify.search(q="year:"+year, type='album', limit=limit, offset=offset)
+        results = spotify.search(q="year:" + str(year), type='album', limit=limit, offset=offset)
         if total is None:
             total = results['albums']['total']
         albums.extend(results['albums']['items'])
@@ -22,6 +24,20 @@ def get_albums(year, limit=50):
         time.sleep(1)
     return albums
 
-def get_artists(spotify_id):
-    return spotify.artists(spotify_id)
+def get_artist(spotify_id):
+    return spotify.artist(spotify_id)
 
+def get_album(spotify_id):
+    return spotify.album(spotify_id)
+
+def get_track_from_album(album):
+    album_data = spotify.album(album.spotify_id)
+    for track in album_data['tracks']['items']:
+        if track_manager.find_track(track['id']) is None:
+            track = Track(
+                name = track['name'],
+                spotify_id = track['id'],
+                album_id = album.album_id,
+                track_number = track['track_number'],
+            )
+            track_manager.save_track(track)
