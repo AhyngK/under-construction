@@ -16,6 +16,7 @@ def get_albums_by_year(year, limit=50):
     total = None
     while total is None or len(albums) < total:
         results = spotify.search(q="year:" + str(year), type='album', limit=limit, offset=offset)
+        print(results)
         if total is None:
             total = results['albums']['total']
         albums.extend(results['albums']['items'])

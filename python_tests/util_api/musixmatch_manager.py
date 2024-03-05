@@ -27,7 +27,7 @@ def get_all_track_lyrics():
             body = get_track_lyrics(id)
             lyric_manager.musixmatch_reqult_to_lyric(body, id)
         track_manager.update_track_is_lyric(id)
-        time.sleep(5)
+        time.sleep(1)
 
 
 def find_lyrics(songDto:SongDto):
@@ -48,7 +48,7 @@ def find_lyrics(songDto:SongDto):
     try:
         response = urllib.request.urlopen(req).read()
     except (urllib.error.HTTPError, urllib.error.URLError, ConnectionResetError) as e:
-        logging.error(repr(e))
+        logging.error("[MUSIXMATCH LOG] : "+repr(e))
         return
 
     r = json.loads(response.decode())

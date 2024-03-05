@@ -9,4 +9,6 @@ from dto import SongDto
 
 
 # Get Lyrics from Musixmatch
-musixmatch_manager.get_all_track_lyrics()
+# musixmatch_manager.get_all_track_lyrics()
+
+spotify_manager.get_albums_by_year(2023, 1)
