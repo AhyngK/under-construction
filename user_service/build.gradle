@@ -21,9 +21,19 @@ repositories {
     mavenCentral()
 }
 
+dependencyManagement {
+  imports {
+    mavenBom("io.opentelemetry:opentelemetry-bom:1.37.0")
+    mavenBom("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha:2.3.0-alpha")
+  }
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web:3.2.4'
+
+    implementation("io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter")
+    implementation("io.opentelemetry.contrib:opentelemetry-samplers:1.33.0-alpha")
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'

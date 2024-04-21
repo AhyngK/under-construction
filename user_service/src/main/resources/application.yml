@@ -1,3 +1,30 @@
 spring:
   application:
     name: user_service
+  output:
+    ansi:
+      enabled: always
+otel:
+  # 추적 컨텍스트 전파에 사용되는 메커니즘 정의
+  # tracecontext와 b3는 다양한 시스템 간 추적 정보를 일관성 있게 유지하는 데 사용
+  propagators:
+    - tracecontext
+    - b3
+  resource:
+    # 리소스(여기서는 서비스)에 대한 특성을 정의
+    attributes:
+      deployment.environment: dev
+      service:
+        # 서비스 이름
+        name: cart
+        # 서비스가 속한 네임 스페이스
+        namespace: shop
+  instrumentation:
+    logback-appender:
+      enabled: true
+    spring-web:
+      enabled: true
+-Dotel:
+  java:
+    global-autoconfigure:
+      enabled=true:
