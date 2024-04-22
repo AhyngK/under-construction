@@ -2,7 +2,7 @@ spring:
   application:
     name: kafka_consumer_test
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka:9092
     consumer:
       group-id: otel
       auto-offset-reset: earliest

@@ -1,0 +1,25 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+exporters:
+  kafka:
+    brokers:
+      - "kafka:9092" # Kafka 서비스 이름과 포트
+    topic: otel-traces # 데이터를 보낼 Kafka 토픽
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [kafka]
+    logs:
+      receivers: [otlp]
+      exporters: [kafka]
+    metrics:
+      receivers: [otlp]
+      exporters: [kafka]
