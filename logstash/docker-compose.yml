@@ -1,0 +1,18 @@
+version: '3'
+services:
+  logstash:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: logstash
+    ports:
+      - "9001:5000"
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ./logstash.yml:/usr/share/logstash/config/logstash.yml
+    networks:
+      - opentelemetry-test
+
+networks:
+  opentelemetry-test:
+    external: true

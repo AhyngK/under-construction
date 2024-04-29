@@ -15,5 +15,12 @@
       <jdbc-url>jdbc:mysql://englising-database.cr4gssmmosrt.ap-northeast-2.rds.amazonaws.com:3306/englising_database</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="mongodb-localhost" uuid="1bfd913c-5a5b-4c63-8b3a-e7c8b15fe621">
+      <driver-ref>mongo</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
+      <jdbc-url>mongodb://localhost:27017</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
